@@ -30,8 +30,6 @@ namespace Sophus
 SO2::SO2()
 {
   unit_complex_ = std::complex<double>(1., 0.);
-
-
 }
 
 SO2
