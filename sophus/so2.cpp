@@ -29,8 +29,7 @@ namespace Sophus
 
 SO2::SO2()
 {
-  unit_complex_.real() = 1.;
-  unit_complex_.imag() = 0.;
+  unit_complex_ = std::complex<double>(1., 0.);
 }
 
 SO2
@@ -79,8 +78,9 @@ Vector2d SO2
 ::operator*(const Vector2d & xy) const
 {
   const double & real = unit_complex_.real();
-  const double & imag = unit_complex_.imag();
-  return Vector2d(real*xy[0] - imag*xy[1], imag*xy[0] + real*xy[1]);
+  return Vector2d(unit_complex_.real()*xy[0] - unit_complex_.imag()*xy[1],
+                unit_complex_.imag()*xy[0] + unit_complex_.real()*xy[1]);
+
 }
 
 SO2 SO2
@@ -93,10 +93,10 @@ Matrix2d SO2
 ::matrix() const
 {
   const double & real = unit_complex_.real();
-  const double & imag = unit_complex_.imag();
   Matrix2d R;
-  R(0,0) = real;  R(0,1) = -imag;
-  R(1,0) = imag; R(1,1) = real;
+	R(0,0) = unit_complex_.real();  R(0,1) = -unit_complex_.imag();
+	R(1,0) = unit_complex_.imag();  R(1,1) = unit_complex_.real();
+
   return R;
 }
 
@@ -122,7 +122,7 @@ double SO2
 double SO2
 ::log(const SO2 & other)
 {
-  return atan2(other.unit_complex_.imag(), other.unit_complex().real());
+	return std::atan2(other.unit_complex_.imag(), other.unit_complex_.real());
 }
 
 SO2 SO2
